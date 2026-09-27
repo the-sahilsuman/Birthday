@@ -887,9 +887,13 @@ button{font:inherit;color:inherit;}
 .scroll-hint{position:absolute;bottom:calc(1.6rem + env(safe-area-inset-bottom));font-size:.65rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,215,226,.45);margin:0;animation:fadeUp 1s .8s both;}
 .scroll-hint .arrow{display:block;margin-top:.5rem;font-size:1rem;animation:bob 1.8s ease-in-out infinite;}
 
+/* ---------- POLAROID (caption auto-height) ---------- */
 .polaroid{
-  position:relative;width:min(78vw,320px);margin:0 auto;
-  padding:14px 14px 78px;border-radius:3px;
+  position:relative;
+  width:min(78vw,320px);
+  margin:0 auto;
+  padding:14px 14px 6px;
+  border-radius:3px;
   background:linear-gradient(158deg,#fffdf9 0%,#f8eee3 100%);
   box-shadow:0 22px 46px -14px rgba(0,0,0,.75), 0 2px 0 rgba(255,255,255,.75) inset, 0 0 0 1px rgba(0,0,0,.12);
   transform:rotate(var(--rot,0deg)) translateY(28px) scale(.93);
@@ -897,21 +901,42 @@ button{font:inherit;color:inherit;}
   transition:opacity .85s ease, transform .95s cubic-bezier(.2,.85,.25,1);
   cursor:pointer;
   -webkit-tap-highlight-color:transparent;
+  display:flex;
+  flex-direction:column;
 }
 .polaroid.in{opacity:1;transform:rotate(var(--rot,0deg)) translateY(0) scale(1);}
 .polaroid.in:active{transform:rotate(calc(var(--rot,0deg) - 3deg)) scale(1.02);}
-.polaroid img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:2px;background:linear-gradient(140deg,#f6d9e2,#e7c37c);}
+.polaroid img{
+  width:100%;
+  aspect-ratio:4/5;
+  object-fit:cover;
+  border-radius:2px;
+  background:linear-gradient(140deg,#f6d9e2,#e7c37c);
+  display:block;
+}
 .tape{position:absolute;width:76px;height:24px;background:linear-gradient(180deg,rgba(231,195,124,.62),rgba(231,195,124,.38));box-shadow:0 2px 6px rgba(0,0,0,.14);border-left:1px solid rgba(255,255,255,.35);border-right:1px solid rgba(255,255,255,.35);top:-11px;}
 .tape-l{left:-16px;transform:rotate(-16deg);}
 .tape-r{right:-16px;transform:rotate(16deg);}
+
+/* caption area: grid-stacked, height = tallest child, grows with text */
 .caption-area{
-  position:absolute;left:12px;right:12px;bottom:14px;
-  height:56px;display:grid;place-items:center;overflow:hidden;
+  position:relative;
+  display:grid;
+  grid-template-columns:1fr;
+  place-items:center;
+  width:100%;
+  padding:16px 6px 16px;
+  min-height:64px;
 }
 .caption-hint, .caption-real{
-  position:absolute;left:0;right:0;
+  grid-area:1 / 1;
+  width:100%;
   font-family:'Caveat',cursive;font-weight:600;
-  font-size:1.15rem;line-height:1.15;text-align:center;
+  font-size:clamp(1rem,4.3vw,1.15rem);
+  line-height:1.32;
+  text-align:center;
+  overflow-wrap:anywhere;
+  word-break:break-word;
   transition:opacity .45s ease, transform .45s ease;
 }
 .caption-hint{
@@ -1145,7 +1170,9 @@ button{font:inherit;color:inherit;}
 }
 @media (max-height:620px){
   .panel{padding:2rem 1.25rem;}
-  .polaroid{width:min(60vw,240px);padding:11px 11px 62px;}
+  .polaroid{width:min(60vw,240px);padding:11px 11px 4px;}
+  .caption-area{padding:11px 4px 11px;min-height:52px;}
+  .caption-hint,.caption-real{font-size:.98rem;line-height:1.28;}
   .profile-seal{width:clamp(130px,40vw,160px);}
   .profile-heart{width:54px;height:54px;}
   .profile-heart svg{width:26px;height:26px;}
@@ -1393,12 +1420,12 @@ const CONFIG = {
   cakeHeadingAfter: 'Your Smile are so precious,<br> keep it up always 💛',
 
   photos: [
-    { src: 'assets/pic1.png', caption: 'The first I saw you, something felt different,like my eyes had crossed a boundary they never knew existed.🙃' },
+    { src: 'assets/pic1.png', caption: 'The first I saw you, something felt different,<br>like my eyes had crossed a boundary they never knew existed.🙃' },
     { src: 'assets/pic2.png', caption: 'You, being effortlessly you. 👸' },
     { src: 'assets/pic3.png', caption: 'Your beauty may catch the eye, but your gentle nature is what makes you truly unforgettable.💛' },
     { src: 'assets/pic6.png', caption: 'That smile of yours 🌸' },
     { src: 'assets/pic7.png', caption: 'The way you carry your pallu, so effortlessly— it simply suits you. 🧚‍♀️' },
-    { src: 'assets/pic4.png', caption: "Your smile wasn't just something I noticed, it was something I kept thinking about without meaning to. 🌚" },
+    { src: 'assets/pic4.png', caption: "Your smile wasn't just something I noticed, <br>it was something I kept thinking about without meaning to. 🌚" },
     { src: 'assets/pic5.png', caption: 'I am obsessed with this look 👀' }
   ],
 
